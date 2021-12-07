@@ -1,0 +1,99 @@
+
+<style>
+  .table-with-click tr {
+    position: relative;
+}
+span.url {
+    color: #1976d2; /* Change this with links color*/
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+span.url:hover {
+    color: #444444; /* Change the value to with anchors hover color*/
+}
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+  }
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+  }
+
+  .content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <div style="width: 40px"></div>
+  <span>Grocery Price Data Dashboard</span>
+    <div class="spacer"></div>
+    
+</div>
+<!--Content-->
+<div class="content" role="main">
+<div class="container">
+    <div class="list row">
+        <div class="col-md-8">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by Item Name"
+              [(ngModel)]="itemNameSearchStr"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"  (click)="searchItemName()">
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8 error">{{errorMessage}}</div>
+          </div>
+        </div>
+        <table class = "table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Item Name </th>
+                <th scope="col">Date</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let wm of grocerypricedata | paginate: config" >
+                <td scope="row"> <span class="url" (click)="getItemDetails(wm.itemName)">{{ wm.itemName}} </span></td>
+                <td scope="row"> {{ wm.dateadded}} </td>
+                <td scope="row"> {{ wm.price }} </td>
+     </tr>
+     </tbody>
+     </table>
+     <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+     <div style="text-align:center">    
+  </div>
+  
+
+
+</div>
